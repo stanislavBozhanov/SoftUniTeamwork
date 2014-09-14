@@ -25,7 +25,7 @@ public class Player extends Entity {
 
     public Image getCarImg() {
 
-        ImageIcon ic = new ImageIcon("/home/velio/Downloads/TeamWorkProject/car.png");
+        ImageIcon ic = new ImageIcon("media/car.png");
         return ic.getImage();
     }
 

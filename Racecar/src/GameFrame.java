@@ -12,7 +12,7 @@ public class GameFrame extends JPanel implements ActionListener {
 
     int holeObstaclesCount = 3;
     int fuelContainersCount = 2;
-
+    
     int gameSpeed = 1;  //Velio: will start at 1 and will increase with the levels up
 
     static ArrayList<HoleObstacle> holeObstacles = new ArrayList<HoleObstacle>();
@@ -45,7 +45,7 @@ public class GameFrame extends JPanel implements ActionListener {
         
         player.draw(g2d);
 
-        for (int i = 0; i < holeObstacles.size(); i++) {
+       for (int i = 0; i < holeObstacles.size(); i++) {
             HoleObstacle tempHoleObstacle = holeObstacles.get(i);
             tempHoleObstacle.draw(g2d);
             tempHoleObstacle.y += gameSpeed;   //Velio: moves the obstacles down

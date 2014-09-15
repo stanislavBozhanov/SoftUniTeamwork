@@ -7,3 +7,5 @@ Vladimnir - testing Eclipse integration
 
 NIkolay`s test
 
+Georgi - Testing Intellij IDEA
+

@@ -17,7 +17,7 @@ public class FuelContainer extends Entity{
     }
 
     public Image getFuelContainerImg() {
-        ImageIcon ic = new ImageIcon("media/fuelcontainer.png");
+        ImageIcon ic = new ImageIcon("Racecar/media/fuelcontainer.png");
         return ic.getImage();
     }
 

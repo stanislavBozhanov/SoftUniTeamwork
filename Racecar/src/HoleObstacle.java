@@ -18,7 +18,7 @@ public class HoleObstacle extends Entity {
 
 	public Image getHoleObstacleImg() {
 
-		ImageIcon ic = new ImageIcon("media/holeobstacle.png");
+		ImageIcon ic = new ImageIcon("Racecar/media/holeobstacle.png");
 		return ic.getImage();
 	}
 

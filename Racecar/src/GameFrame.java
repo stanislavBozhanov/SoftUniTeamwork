@@ -13,6 +13,8 @@ public class GameFrame extends JPanel implements ActionListener {
     int holeObstaclesCount = 3;
     int fuelContainersCount = 2;
 
+    int gameSpeed = 1;  //Velio: will start at 1 and will increase with the levels up
+
     static ArrayList<HoleObstacle> holeObstacles = new ArrayList<HoleObstacle>();
     static ArrayList<FuelContainer> fuelContainers = new ArrayList<FuelContainer>();
     Random rand = new Random();
@@ -46,11 +48,13 @@ public class GameFrame extends JPanel implements ActionListener {
         for (int i = 0; i < holeObstacles.size(); i++) {
             HoleObstacle tempHoleObstacle = holeObstacles.get(i);
             tempHoleObstacle.draw(g2d);
+            tempHoleObstacle.y += gameSpeed;   //Velio: moves the obstacles down
         }
 
         for (int i = 0; i < fuelContainers.size(); i++) {
             FuelContainer tempFuelContainer = fuelContainers.get(i);
             tempFuelContainer.draw(g2d);
+            tempFuelContainer.y += gameSpeed;  //Velio - moves the fuel containers down
         }
     }
 

@@ -6,10 +6,11 @@ import java.util.ArrayList;
 public class Player{
 
 	int velX = 0, velY = 0;
-	int speed = 5;
+	int speed = 4;
 
-	int x, y;
-	public Player(int x, int y) {
+    int x, y;
+
+    public Player(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
@@ -37,8 +38,8 @@ public class Player{
 
 		if (key == KeyEvent.VK_UP || key == KeyEvent.VK_K) {
 			velY = -speed;
-		} else if (key == KeyEvent.VK_DOWN || key == KeyEvent.VK_J) {
-			velY = speed;
+//		} else if (key == KeyEvent.VK_DOWN || key == KeyEvent.VK_J) {
+//			velY = speed;
 		} else if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_H) {
 			velX = -speed;
 		} else if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_L) {
@@ -51,8 +52,8 @@ public class Player{
 
 		if (key == KeyEvent.VK_UP || key == KeyEvent.VK_K) {
 			velY = 0;
-		} else if (key == KeyEvent.VK_DOWN || key == KeyEvent.VK_J) {
-			velY = 0;
+//		} else if (key == KeyEvent.VK_DOWN || key == KeyEvent.VK_J) {
+//			velY = 0;
 		} else if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_H) {
 			velX = 0;
 		} else if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_L) {
@@ -72,7 +73,10 @@ public class Player{
 			if (getBounds().intersects(tempHoleObstacle.getBounds())) {
 				// you die and lose a life or if no more lives - GAME OVER
 				JOptionPane.showMessageDialog(null, "BAD, you just lost 7 points");
-				GameFrame.removeHoleObstacle(tempHoleObstacle);
+
+                //velio: We need to add code to reset the car at the initial position
+
+                GameFrame.removeHoleObstacle(tempHoleObstacle);
 			}
 		}
 

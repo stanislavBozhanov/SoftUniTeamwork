@@ -3,13 +3,15 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-public class Player extends Entity {
+public class Player{
 
 	int velX = 0, velY = 0;
 	int speed = 5;
 
+	int x, y;
 	public Player(int x, int y) {
-		super(x, y);
+		this.x = x;
+		this.y = y;
 	}
 
 	public void update() {

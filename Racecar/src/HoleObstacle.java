@@ -1,10 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class HoleObstacle extends Entity {
+public class HoleObstacle{
 
+	int x, y;
 	public HoleObstacle(int x, int y) {
-		super(x, y);
+		this.x = x;
+		this.y = y;
 	}
 
 	public void update() {

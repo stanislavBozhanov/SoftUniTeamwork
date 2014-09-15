@@ -1,11 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class FuelContainer extends Entity{
+public class FuelContainer {
 
-    public FuelContainer(int x, int y) {
-        super(x, y);
-    }
+	int x, y;
+
+	public FuelContainer(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
 
     public void update() {
 

@@ -11,7 +11,7 @@ public class GameFrame extends JPanel implements ActionListener {
     Player player;
 
     int holeObstaclesCount = 3;
-    int fuelContainersCount = 1;
+    int fuelContainersCount = 2;
 
     static ArrayList<HoleObstacle> holeObstacles = new ArrayList<HoleObstacle>();
     static ArrayList<FuelContainer> fuelContainers = new ArrayList<FuelContainer>();
@@ -23,7 +23,6 @@ public class GameFrame extends JPanel implements ActionListener {
 
         player = new Player(250, 600);
         addKeyListener(new KeyAdapt(player));
-
 
         mainTimer = new Timer(10, this);
         mainTimer.start();
@@ -41,7 +40,7 @@ public class GameFrame extends JPanel implements ActionListener {
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
-
+        
         player.draw(g2d);
 
         for (int i = 0; i < holeObstacles.size(); i++) {
@@ -64,7 +63,11 @@ public class GameFrame extends JPanel implements ActionListener {
     public void addHoleObstacle(HoleObstacle h) {
         holeObstacles.add(h);
     }
-
+    
+    public static void removeHoleObstacle(HoleObstacle h) {
+        holeObstacles.remove(h);
+    }
+    
     public static ArrayList<HoleObstacle> getHoleObstacleList() {
         return holeObstacles;
     }

@@ -58,14 +58,15 @@ public class GameFrame extends JPanel implements ActionListener {
        for (int i = 0; i < holeObstacles.size(); i++) {
             HoleObstacle tempHoleObstacle = holeObstacles.get(i);
             tempHoleObstacle.draw(g2d);
-            //tempHoleObstacle.y += gameSpeed;   //Velio: moves the obstacles down//...vlado - not sure if this should be commented or not after the other changes
+            tempHoleObstacle.y += gameSpeed;   //Velio: moves the obstacles down//...vlado - not sure if this should be commented or not after the other changes
         }
 
         for (int i = 0; i < fuelContainers.size(); i++) {
             FuelContainer tempFuelContainer = fuelContainers.get(i);
             tempFuelContainer.draw(g2d);
-            //tempFuelContainer.y += gameSpeed;  //Velio - moves the fuel containers down//...vlado - not sure if this should be commented or not after the other changes
+            tempFuelContainer.y += gameSpeed;  //Velio - moves the fuel containers down//...vlado - not sure if this should be commented or not after the other changes
         }
+        //Velio @vlado - uncommented them because when I tried to change the game speed - the obstacles moved with the same speed as before. Now when the gameSpeed is up, everything moves fasted.
     }
 
     @Override

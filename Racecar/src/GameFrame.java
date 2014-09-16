@@ -1,7 +1,9 @@
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -9,7 +11,7 @@ public class GameFrame extends JPanel implements ActionListener {
 
     Timer mainTimer;
     Player player;
-
+    
     int holeObstaclesCount = 3;
     int fuelContainersCount = 2;
     
@@ -28,39 +30,58 @@ public class GameFrame extends JPanel implements ActionListener {
 
         mainTimer = new Timer(10, this);
         mainTimer.start();
+        
+        startGame();
 
-        for (int i = 0; i < holeObstaclesCount; i++) {
+        /*for (int i = 0; i < holeObstaclesCount; i++) {
             addHoleObstacle(new HoleObstacle(rand.nextInt(500), rand.nextInt(400)));
         }
 
         for (int i = 0; i < fuelContainersCount; i++) {
-            addFuelContainer(new FuelContainer(rand.nextInt(500), rand.nextInt(400)));
-        }
+            addFuelContainer(new FuelContainer(rand.nextInt(500), rand.nextInt(400))); //moved into the last method "start Game"
+        }*/
 
     }
 
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
-        
+      
+        ///////////////////////////////////////////////////////vlado - opit da nachertaia linii
+        Line2D lin1 = new Line2D.Float(150, 0, 150, 800*5);
+        g2d.draw(lin1);
+        Line2D lin2 = new Line2D.Float(450, 0, 450, 800*5);
+        g2d.draw(lin2);
+        /////////////////////////////////////////////////////////////
         player.draw(g2d);
 
        for (int i = 0; i < holeObstacles.size(); i++) {
             HoleObstacle tempHoleObstacle = holeObstacles.get(i);
             tempHoleObstacle.draw(g2d);
-            tempHoleObstacle.y += gameSpeed;   //Velio: moves the obstacles down
+            //tempHoleObstacle.y += gameSpeed;   //Velio: moves the obstacles down//...vlado - not sure if this should be commented or not after the other changes
         }
 
         for (int i = 0; i < fuelContainers.size(); i++) {
             FuelContainer tempFuelContainer = fuelContainers.get(i);
             tempFuelContainer.draw(g2d);
-            tempFuelContainer.y += gameSpeed;  //Velio - moves the fuel containers down
+            //tempFuelContainer.y += gameSpeed;  //Velio - moves the fuel containers down//...vlado - not sure if this should be commented or not after the other changes
         }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         player.update();
+        
+        for (int i = 0; i < holeObstacles.size(); i++) {
+            HoleObstacle tempHoleObstacle = holeObstacles.get(i);
+            tempHoleObstacle.update();
+        }
+
+        for (int i = 0; i < fuelContainers.size(); i++) {
+            FuelContainer tempFuelContainer = fuelContainers.get(i);
+            tempFuelContainer.update();
+        }
+        
         repaint();
     }
 
@@ -87,4 +108,18 @@ public class GameFrame extends JPanel implements ActionListener {
     public static ArrayList<FuelContainer> getFuelContainerList() {
         return fuelContainers;
     }
+    //////////////////////////////////////////////////////vlado - added to try to make the movement in the midle and more appart
+    public void startGame() {
+    	holeObstaclesCount = gameSpeed * 10;
+    	fuelContainersCount = gameSpeed * 2;
+    	
+    	for (int i = 0; i < holeObstaclesCount; i++) {
+    		addHoleObstacle(new HoleObstacle(rand.nextInt(450 - 150) + 150, -rand.nextInt(800)*5));
+    	}
+
+    	for (int i = 0; i < fuelContainersCount; i++) {
+    		addFuelContainer(new FuelContainer(rand.nextInt(450 - 150) + 150, -rand.nextInt(800)*5));
+    	}
+    }
+    //////////////////////////////////////////////////////
 }

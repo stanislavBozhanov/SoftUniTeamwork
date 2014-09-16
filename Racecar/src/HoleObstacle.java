@@ -10,7 +10,7 @@ public class HoleObstacle{
 	}
 
 	public void update() {
-
+		y += 1; //edited by vlado - continues move
 	}
 
 	public void draw(Graphics2D g2d) {

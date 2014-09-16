@@ -46,7 +46,8 @@ public class GameFrame extends JPanel implements ActionListener {
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
-      
+        Lives l = new Lives(460, 30);
+        l.draw(g2d);
         ///////////////////////////////////////////////////////vlado - opit da nachertaia linii
         Line2D lin1 = new Line2D.Float(150, 0, 150, 800*5);
         g2d.draw(lin1);

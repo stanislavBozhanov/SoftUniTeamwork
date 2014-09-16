@@ -114,11 +114,11 @@ public class GameFrame extends JPanel implements ActionListener {
     	fuelContainersCount = gameSpeed * 2;
     	
     	for (int i = 0; i < holeObstaclesCount; i++) {
-    		addHoleObstacle(new HoleObstacle(rand.nextInt(450 - 150) + 150, -rand.nextInt(800)*5));
+    		addHoleObstacle(new HoleObstacle(rand.nextInt(450 - 150) + 150, -rand.nextInt(800 * gameSpeed)*5)); //Velio: added * gameSpeed variable
     	}
 
     	for (int i = 0; i < fuelContainersCount; i++) {
-    		addFuelContainer(new FuelContainer(rand.nextInt(450 - 150) + 150, -rand.nextInt(800)*5));
+    		addFuelContainer(new FuelContainer(rand.nextInt(450 - 150) + 150, -rand.nextInt(800 * gameSpeed)*5));
     	}
     }
     //////////////////////////////////////////////////////

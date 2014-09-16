@@ -36,11 +36,11 @@ public class Player{
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 
-		if (key == KeyEvent.VK_UP || key == KeyEvent.VK_K) {
-			velY = -speed;
+//		if (key == KeyEvent.VK_UP || key == KeyEvent.VK_K) {
+//			velY = -speed;
 //		} else if (key == KeyEvent.VK_DOWN || key == KeyEvent.VK_J) {
 //			velY = speed;
-		} else if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_H) {
+		if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_H) {
 			velX = -speed;
 		} else if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_L) {
 			velX = speed;
@@ -50,11 +50,11 @@ public class Player{
 	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
 
-		if (key == KeyEvent.VK_UP || key == KeyEvent.VK_K) {
-			velY = 0;
+//		if (key == KeyEvent.VK_UP || key == KeyEvent.VK_K) {
+//			velY = 0;
 //		} else if (key == KeyEvent.VK_DOWN || key == KeyEvent.VK_J) {
 //			velY = 0;
-		} else if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_H) {
+		if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_H) {
 			velX = 0;
 		} else if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_L) {
 			velX = 0;

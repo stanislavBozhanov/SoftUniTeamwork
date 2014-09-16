@@ -15,7 +15,7 @@ public class FuelContainer {
 	}
 
     public void update() {
-    	y += 1; //edited by vlado - continues move
+    	//y += 1; //edited by vlado - continues move
     	
     	//Bebbo: make FuelContainer repeat
     	checkOffScreen();
@@ -32,13 +32,13 @@ public class FuelContainer {
     }
 
     public Rectangle getBounds() {
-        return new Rectangle(x, y, getFuelContainerImg().getWidth(null), getFuelContainerImg().getHeight(null));
+        return new Rectangle(x, y, 30, 30); //getFuelContainerImg().getWidth(null), getFuelContainerImg().getHeight(null));
     }
     
   //Bebbo: make FuelContainer repeat;
     public void checkOffScreen(){
 		
-		if (y >= 680) {
+		if (y >= 900) {
 			y = startY;
 		}
 	}

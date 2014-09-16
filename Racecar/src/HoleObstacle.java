@@ -16,7 +16,7 @@ public class HoleObstacle{
 	}
 
 	public void update() {
-		y += 1; //edited by vlado - continues move
+		//y += 1; //edited by vlado - continues move
 		//Bebbo: make holes repeat
 		checkOffScreen();
 	}
@@ -33,13 +33,14 @@ public class HoleObstacle{
 	}
 
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, getHoleObstacleImg().SCALE_DEFAULT,getHoleObstacleImg().SCALE_DEFAULT);
-	}
+		return new Rectangle(x, y, 15, 15); //getHoleObstacleImg().SCALE_DEFAULT,getHoleObstacleImg().SCALE_DEFAULT);
+        //VELIO: 15, 15 намаля малко размера на дупката, който отчита сблъсък. Иначе при по-трудни нива става прекалено трудно да се избегне удар.
+    }
 	
 	//Bebbo: make holes repeat;
     public void checkOffScreen(){
 		
-		if (y >= 680) {
+		if (y >= 900) {
 			y = startY;
 		}
 	}

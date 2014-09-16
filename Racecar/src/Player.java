@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Player{
 
 	int velX = 0, velY = 0;
-	int speed = 4;
+	int speed = 2;
 
     int x, y;
 
@@ -94,7 +94,8 @@ public class Player{
 	}
 
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, getCarImg().getWidth(null), getCarImg().getHeight(null));
-	}
+		return new Rectangle(x, y, 40, 110); //getCarImg().getWidth(null), getCarImg().getHeight(null));
+        //VELIO: 40, 110 малко намаля размера на колата, така че ако се удари дупка леко отстрани на колата, няма веднага да умреш.
+    }
 
 }

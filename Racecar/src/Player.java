@@ -5,9 +5,9 @@ import java.util.ArrayList;
 
 public class Player{
 
-	int velX = 0, velY = 0;
+	int velX = 0;
 	int speed = 2;
-
+    int lives = 5;
     int x, y;
 
     public Player(int x, int y) {
@@ -16,15 +16,35 @@ public class Player{
 	}
 
 	public void update() {
-		y += velY;
 		x += velX;
-
 		checkCollisions();
 	}
 
 	public void draw(Graphics2D g2d) {
 		g2d.drawImage(getCarImg(), x, y, null);
-		//g2d.draw(getBounds());
+
+        switch (lives) {
+            case 5: g2d.drawImage(Lives.getSkullImg(), 465, 325, null);
+                g2d.drawImage(Lives.getSkullImg(), 485, 325, null);
+                g2d.drawImage(Lives.getSkullImg(), 505, 325, null);
+                g2d.drawImage(Lives.getSkullImg(), 525, 325, null);
+                g2d.drawImage(Lives.getSkullImg(), 545, 325, null);
+                break;
+            case 4: g2d.drawImage(Lives.getSkullImg(), 465, 325, null);
+                g2d.drawImage(Lives.getSkullImg(), 485, 325, null);
+                g2d.drawImage(Lives.getSkullImg(), 505, 325, null);
+                g2d.drawImage(Lives.getSkullImg(), 525, 325, null);
+                break;
+            case 3: g2d.drawImage(Lives.getSkullImg(), 465, 325, null);
+                g2d.drawImage(Lives.getSkullImg(), 485, 325, null);
+                g2d.drawImage(Lives.getSkullImg(), 505, 325, null);
+                break;
+            case 2: g2d.drawImage(Lives.getSkullImg(), 465, 325, null);
+                g2d.drawImage(Lives.getSkullImg(), 485, 325, null);
+                break;
+            case 1: g2d.drawImage(Lives.getSkullImg(), 465, 325, null);
+                break;
+        }
 	}
 
 	public Image getCarImg() {
@@ -36,24 +56,24 @@ public class Player{
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 
-//		if (key == KeyEvent.VK_UP || key == KeyEvent.VK_K) {
-//			velY = -speed;
-//		} else if (key == KeyEvent.VK_DOWN || key == KeyEvent.VK_J) {
-//			velY = speed;
 		if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_H) {
-			velX = -speed;
+            velX = -speed;
+            if (x <= 0){
+                x = 0;
+                velX = 0;
+            }
 		} else if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_L) {
 			velX = speed;
+            if (x >= 390){
+                x = 390;
+                velX = 0;
+            }
 		}
 	}
 
 	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
 
-//		if (key == KeyEvent.VK_UP || key == KeyEvent.VK_K) {
-//			velY = 0;
-//		} else if (key == KeyEvent.VK_DOWN || key == KeyEvent.VK_J) {
-//			velY = 0;
 		if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_H) {
 			velX = 0;
 		} else if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_L) {
@@ -71,11 +91,16 @@ public class Player{
 			HoleObstacle tempHoleObstacle = holeObstacles.get(i);
 
 			if (getBounds().intersects(tempHoleObstacle.getBounds())) {
-				// you die and lose a life or if no more lives - GAME OVER
-				JOptionPane.showMessageDialog(null, "BAD, you just lost 7 points");
 
-                //velio: We need to add code to reset the car at the initial position
+                lives--;
+                if (lives == 0) {
+                    JOptionPane.showMessageDialog(null, "GAME OVER");
+                    System.exit(0);
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "You crashed! Be more careful!");
 
+                }
                 GameFrame.removeHoleObstacle(tempHoleObstacle);
 			}
 		}
@@ -86,7 +111,7 @@ public class Player{
 
 			if (getBounds().intersects(tempFuelContainer.getBounds())) {
 				GameFrame.removeFuelContainer(tempFuelContainer);
-				JOptionPane.showMessageDialog(null, "Your tank is full now!");
+				//JOptionPane.showMessageDialog(null, "Your tank is full now!");
 				// need to add more code - when you hit a fuelContainer = the
 				// fuel meter goes full
 			}

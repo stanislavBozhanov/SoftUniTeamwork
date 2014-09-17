@@ -12,11 +12,10 @@ public class HoleObstacle{
 		this.y = y;
 		
 		//Bebbo: make holes repeat
-		startY = y;
+		this.startY = y;
 	}
 
 	public void update() {
-		//y += 1; //edited by vlado - continues move
 		//Bebbo: make holes repeat
 		checkOffScreen();
 	}
@@ -38,10 +37,11 @@ public class HoleObstacle{
     }
 	
 	//Bebbo: make holes repeat;
+    //Velio: when all obstacles are off the screen - level is up, gameSpeed++
     public void checkOffScreen(){
 		
-		if (y >= 900) {
-			y = startY;
+		if (y >= 950) {
+			GameFrame.removeHoleObstacle(this);
 		}
 	}
 

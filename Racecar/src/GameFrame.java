@@ -11,6 +11,7 @@ public class GameFrame extends JPanel implements ActionListener {
 
     Timer mainTimer;
     Player player;
+    FuelMeter fuelMeter;  //VELIO: adds the fuelMeter
     
     int holeObstaclesCount = 3;
     int fuelContainersCount = 2;
@@ -30,6 +31,8 @@ public class GameFrame extends JPanel implements ActionListener {
 
         mainTimer = new Timer(10, this);
         mainTimer.start();
+
+        fuelMeter = new FuelMeter(460, 300);    //positions the fuel meter on the screen
         
         startGame();
 
@@ -69,6 +72,7 @@ public class GameFrame extends JPanel implements ActionListener {
         //Velio @vlado - uncommented them because when I tried to change the game speed - the obstacles moved with the same speed as before. Now when the gameSpeed is up, everything moves fasted.
 
         player.draw(g2d);
+        fuelMeter.draw(g2d);
     }
 
 

@@ -56,12 +56,12 @@ public class GameFrame extends JPanel implements ActionListener {
         g2d.draw(lin2);
         /////////////////////////////////////////////////////////////*/
 
-<<<<<<< HEAD
+
         Road asphalt = new Road(460,800);
-=======
+
         asphalt.draw(g2d);
         asphalt.setGameSpeed(gameSpeed);
->>>>>>> 0c744f60eebbfbc6dcfd7a67c1eca2cf0388f572
+
 
        for (int i = 0; i < holeObstacles.size(); i++) {
             HoleObstacle tempHoleObstacle = holeObstacles.get(i);

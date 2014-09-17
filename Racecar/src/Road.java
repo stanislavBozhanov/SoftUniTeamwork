@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Road extends GameFrame{
+public class Road{
 	
 	int x, y;
 	

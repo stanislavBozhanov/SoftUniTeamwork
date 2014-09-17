@@ -22,7 +22,7 @@ public class GameFrame extends JPanel implements ActionListener {
     Random rand = new Random();
 
 
-    public GameFrame(int x, int y) {
+    public GameFrame() {
         setFocusable(true);
 
         player = new Player(250, 600);
@@ -46,16 +46,14 @@ public class GameFrame extends JPanel implements ActionListener {
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
-        
-        Lives l = new Lives(460, 30);
-        l.draw(g2d);
+      
         ///////////////////////////////////////////////////////vlado - opit da nachertaia linii
         Line2D lin1 = new Line2D.Float(150, 0, 150, 800*5);
         g2d.draw(lin1);
         Line2D lin2 = new Line2D.Float(450, 0, 450, 800*5);
         g2d.draw(lin2);
         /////////////////////////////////////////////////////////////
-
+        player.draw(g2d);
 
        for (int i = 0; i < holeObstacles.size(); i++) {
             HoleObstacle tempHoleObstacle = holeObstacles.get(i);
@@ -69,14 +67,12 @@ public class GameFrame extends JPanel implements ActionListener {
             tempFuelContainer.y += gameSpeed;  //Velio - moves the fuel containers down//...vlado - not sure if this should be commented or not after the other changes
         }
         //Velio @vlado - uncommented them because when I tried to change the game speed - the obstacles moved with the same speed as before. Now when the gameSpeed is up, everything moves fasted.
-
-        player.draw(g2d);
     }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        player.update();
+        
         for (int i = 0; i < holeObstacles.size(); i++) {
             HoleObstacle tempHoleObstacle = holeObstacles.get(i);
             tempHoleObstacle.update();
@@ -86,8 +82,7 @@ public class GameFrame extends JPanel implements ActionListener {
             FuelContainer tempFuelContainer = fuelContainers.get(i);
             tempFuelContainer.update();
         }
-
-        player.update();
+        
         repaint();
     }
 

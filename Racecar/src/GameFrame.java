@@ -1,3 +1,4 @@
+
 import javax.swing.*;
 import javax.swing.Timer;
 
@@ -29,7 +30,7 @@ public class GameFrame extends JPanel implements ActionListener {
     public GameFrame() {
         setFocusable(true);
 
-        player = new Player(250, 650);
+        player = new Player(250, 550); // georgi, changed the player startpoint.
         addKeyListener(new KeyAdapt(player));
 
         lives = new Lives(460, 300);
@@ -56,8 +57,12 @@ public class GameFrame extends JPanel implements ActionListener {
         g2d.draw(lin2);
         /////////////////////////////////////////////////////////////*/
 
+
+        Road asphalt = new Road(460,800);
+
         asphalt.draw(g2d);
         asphalt.setGameSpeed(gameSpeed);
+
 
        for (int i = 0; i < holeObstacles.size(); i++) {
             HoleObstacle tempHoleObstacle = holeObstacles.get(i);
@@ -174,3 +179,4 @@ public class GameFrame extends JPanel implements ActionListener {
 
 
 }
+

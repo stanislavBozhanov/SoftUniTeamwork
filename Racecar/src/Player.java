@@ -97,10 +97,9 @@ public class Player{
                     JOptionPane.showMessageDialog(null, "GAME OVER");
                     System.exit(0);
                 }
-                else {
-                    JOptionPane.showMessageDialog(null, "You crashed! Be more careful!");
-
-                }
+              //  else {  // georgi, removed the message.
+              //      JOptionPane.showMessageDialog(null, "You crashed! Be more careful!");
+             //   }
                 GameFrame.removeHoleObstacle(tempHoleObstacle);
 			}
 		}

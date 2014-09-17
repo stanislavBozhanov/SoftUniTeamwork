@@ -1,6 +1,3 @@
-/*
-Created by Velio
- */
 
 import javax.swing.*;
 import java.awt.*;
@@ -69,3 +66,4 @@ public class FuelMeter {
     }
 
 }
+

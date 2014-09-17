@@ -4,7 +4,7 @@ public class Main {
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Wacky Racer");
-        frame.setSize(600, 900);
+        frame.setSize(600, 700); // georgi, changed the screen size.
         frame.setLocationRelativeTo(null);//vlado, centered the frame. It should be after the size. 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);

@@ -1,32 +1,26 @@
-
 import javax.swing.*;
 import java.awt.*;
 
 public class FuelMeter {
     int x, y;
-
     int fuel = 100;
-
-    public int getTempFuel() {
-        return tempFuel;
-    }
-
     int tempFuel = fuel;
-    public void setFuel(int f) {
-        this.tempFuel = f;
-    }
-
-    public void setTempFuel(int tf) {
-        this.tempFuel -= tf;
-    }
 
     public FuelMeter(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public void update() {
+    public int getTempFuel() {
+        return tempFuel;
+    }
 
+    public void setFuel(int f) {
+        this.tempFuel = f;
+    }
+
+    public void setTempFuel(int tf) {
+        this.tempFuel -= tf;
     }
 
     public void draw (Graphics2D g2d) {
@@ -61,7 +55,7 @@ public class FuelMeter {
     }
 
     public Image getFuelContainerImg() {
-        ImageIcon ic = new ImageIcon("media/fuelmeter.png");
+        ImageIcon ic = new ImageIcon("Racecar/media/fuelmeter.png");
         return ic.getImage();
     }
 

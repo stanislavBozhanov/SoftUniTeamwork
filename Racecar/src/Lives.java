@@ -17,12 +17,12 @@ public class Lives extends Player {
     }
 	
 	public static Image getSkullImg() {
-		ImageIcon ic = new ImageIcon("media/skull.png");
+		ImageIcon ic = new ImageIcon("Racecar/media/skull.png");
 		return ic.getImage();
 	}
 
     public Image getLivesImg() {
-        ImageIcon ic = new ImageIcon("media/lives.png");
+        ImageIcon ic = new ImageIcon("Racecar/media/lives.png");
         return ic.getImage();
     }
 }

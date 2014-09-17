@@ -1,11 +1,8 @@
-
 import javax.swing.*;
 import javax.swing.Timer;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Line2D;
 import java.util.*;
 
 public class GameFrame extends JPanel implements ActionListener {

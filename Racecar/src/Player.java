@@ -111,9 +111,7 @@ public class Player{
 
 			if (getBounds().intersects(tempFuelContainer.getBounds())) {
 				GameFrame.removeFuelContainer(tempFuelContainer);
-				//JOptionPane.showMessageDialog(null, "Your tank is full now!");
-				// need to add more code - when you hit a fuelContainer = the
-				// fuel meter goes full
+                GameFrame.maxFuel(); //fills the fuel with the maxFuel() method in GameFrame
 			}
 		}
 	}

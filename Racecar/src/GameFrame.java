@@ -1,21 +1,22 @@
 import javax.swing.*;
+import javax.swing.Timer;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Line2D;
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
 
 public class GameFrame extends JPanel implements ActionListener {
 
     Timer mainTimer;
     Player player;
-    FuelMeter fuelMeter;  //VELIO: adds the fuelMeter
+    static FuelMeter fuelMeter;  //VELIO: adds the fuelMeter
     Lives lives;
     Road asphalt;
 
-    int gameSpeed = 1;  //Velio: will start at 1 and will increase with the levels up
+
+    int gameSpeed = 2;  //Velio: will start at 1 and will increase with the levels up
 
     int holeObstaclesCount;
     int fuelContainersCount;
@@ -123,11 +124,22 @@ public class GameFrame extends JPanel implements ActionListener {
         return fuelContainers;
     }
 
+
     //////////////////////////////////////////////////////vlado - added to try to make the movement in the midle and more appart
     public void startGame() {
     	holeObstaclesCount = gameSpeed * 10;
     	fuelContainersCount = gameSpeed * 2;
-    	
+
+        //Timer for the fuel - each 10 seconds the fuel goes down
+        Timer fuelBurner = new Timer(10000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                fuelMeter.setTempFuel(10);
+            }
+        });
+        fuelBurner.setRepeats(true);
+        fuelBurner.start();
+
     	for (int i = 0; i < holeObstaclesCount; i++) {
     		addHoleObstacle(new HoleObstacle(rand.nextInt(425), -10 -rand.nextInt(800 * gameSpeed)*5));
 
@@ -144,9 +156,21 @@ public class GameFrame extends JPanel implements ActionListener {
             gameSpeed++;
             holeObstacles.clear();
             fuelContainers.clear();
-            JOptionPane.showMessageDialog(null, "Nice Driving! You've completed level " + (gameSpeed - 1) + ". Let's drive on!");
+            JOptionPane.showMessageDialog(null, "Nice Driving! You've completed level " + (gameSpeed - 2) + ". Let's drive on!");
             startGame();
         }
 
+        if (fuelMeter.getTempFuel() == -10) {
+            JOptionPane.showMessageDialog(null, "You've run out of fuel! GAME OVER");
+            System.exit(0);
+        }
+
     }
+
+    //fills the fuel when a fuelcontainer is hit
+    public static void maxFuel() {
+        fuelMeter.setFuel(100);
+    }
+
+
 }

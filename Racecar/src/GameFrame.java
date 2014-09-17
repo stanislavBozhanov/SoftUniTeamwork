@@ -22,7 +22,7 @@ public class GameFrame extends JPanel implements ActionListener {
     Random rand = new Random();
 
 
-    public GameFrame() {
+    public GameFrame(int x, int y) {
         setFocusable(true);
 
         player = new Player(250, 600);
@@ -46,6 +46,7 @@ public class GameFrame extends JPanel implements ActionListener {
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
+        
         Lives l = new Lives(460, 30);
         l.draw(g2d);
         ///////////////////////////////////////////////////////vlado - opit da nachertaia linii

@@ -13,11 +13,13 @@ public class GameFrame extends JPanel implements ActionListener {
     Timer mainTimer;
     Player player;
     FuelMeter fuelMeter;  //VELIO: adds the fuelMeter
-    
-    int holeObstaclesCount = 3;
-    int fuelContainersCount = 2;
-    
+    Lives lives;
+    Road asphalt;
+
     int gameSpeed = 1;  //Velio: will start at 1 and will increase with the levels up
+
+    int holeObstaclesCount;
+    int fuelContainersCount;
 
     static ArrayList<HoleObstacle> holeObstacles = new ArrayList<HoleObstacle>();
     static ArrayList<FuelContainer> fuelContainers = new ArrayList<FuelContainer>();
@@ -27,60 +29,63 @@ public class GameFrame extends JPanel implements ActionListener {
     public GameFrame() {
         setFocusable(true);
 
-        player = new Player(250, 600);
+        player = new Player(250, 650);
         addKeyListener(new KeyAdapt(player));
+
+        lives = new Lives(460, 300);
+        asphalt = new Road(0, -850);
+        fuelMeter = new FuelMeter(460, 400);
 
         mainTimer = new Timer(10, this);
         mainTimer.start();
 
-        fuelMeter = new FuelMeter(460, 300);    //positions the fuel meter on the screen
-        
+
         startGame();
 
-        /*for (int i = 0; i < holeObstaclesCount; i++) {
-            addHoleObstacle(new HoleObstacle(rand.nextInt(500), rand.nextInt(400)));
-        }
-
-        for (int i = 0; i < fuelContainersCount; i++) {
-            addFuelContainer(new FuelContainer(rand.nextInt(500), rand.nextInt(400))); //moved into the last method "start Game"
-        }*/
 
     }
 
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
-        Lives l = new Lives(460, 30);
-        l.draw(g2d);
-        ///////////////////////////////////////////////////////vlado - opit da nachertaia linii
+
+        /*///////////////////////////////////////////////////////vlado - opit da nachertaia linii
         Line2D lin1 = new Line2D.Float(150, 0, 150, 800*5);
         g2d.draw(lin1);
         Line2D lin2 = new Line2D.Float(450, 0, 450, 800*5);
         g2d.draw(lin2);
-        /////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////*/
 
+<<<<<<< HEAD
         Road asphalt = new Road(460,800);
+=======
+        asphalt.draw(g2d);
+        asphalt.setGameSpeed(gameSpeed);
+>>>>>>> 0c744f60eebbfbc6dcfd7a67c1eca2cf0388f572
 
        for (int i = 0; i < holeObstacles.size(); i++) {
             HoleObstacle tempHoleObstacle = holeObstacles.get(i);
             tempHoleObstacle.draw(g2d);
-            tempHoleObstacle.y += gameSpeed;   //Velio: moves the obstacles down//...vlado - not sure if this should be commented or not after the other changes
+            tempHoleObstacle.y += gameSpeed;
+
         }
 
         for (int i = 0; i < fuelContainers.size(); i++) {
             FuelContainer tempFuelContainer = fuelContainers.get(i);
             tempFuelContainer.draw(g2d);
-            tempFuelContainer.y += gameSpeed;  //Velio - moves the fuel containers down//...vlado - not sure if this should be commented or not after the other changes
+            tempFuelContainer.y += gameSpeed;
         }
-        //Velio @vlado - uncommented them because when I tried to change the game speed - the obstacles moved with the same speed as before. Now when the gameSpeed is up, everything moves fasted.
 
         player.draw(g2d);
         fuelMeter.draw(g2d);
+        lives.draw(g2d);
     }
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
+        asphalt.update();
 
         for (int i = 0; i < holeObstacles.size(); i++) {
             HoleObstacle tempHoleObstacle = holeObstacles.get(i);
@@ -93,6 +98,9 @@ public class GameFrame extends JPanel implements ActionListener {
         }
 
         player.update();
+        lives.update();
+
+        checkEnd();
         repaint();
     }
 
@@ -119,19 +127,32 @@ public class GameFrame extends JPanel implements ActionListener {
     public static ArrayList<FuelContainer> getFuelContainerList() {
         return fuelContainers;
     }
+
     //////////////////////////////////////////////////////vlado - added to try to make the movement in the midle and more appart
     public void startGame() {
     	holeObstaclesCount = gameSpeed * 10;
     	fuelContainersCount = gameSpeed * 2;
     	
     	for (int i = 0; i < holeObstaclesCount; i++) {
-    		addHoleObstacle(new HoleObstacle(rand.nextInt(450 - 150) + 150, -rand.nextInt(800 * gameSpeed)*5)); //Velio: added * gameSpeed variable
+    		addHoleObstacle(new HoleObstacle(rand.nextInt(425), -10 -rand.nextInt(800 * gameSpeed)*5));
+
     	}
 
     	for (int i = 0; i < fuelContainersCount; i++) {
-    		addFuelContainer(new FuelContainer(rand.nextInt(450 - 150) + 150, -rand.nextInt(800 * gameSpeed)*5));
+    		addFuelContainer(new FuelContainer(rand.nextInt(410), -10 -rand.nextInt(800 * gameSpeed)*5));
     	}
     }
     //////////////////////////////////////////////////////
+
+    public void checkEnd() {
+        if (holeObstacles.size() == 0) {
+            gameSpeed++;
+            holeObstacles.clear();
+            fuelContainers.clear();
+            JOptionPane.showMessageDialog(null, "Nice Driving! You've completed level " + (gameSpeed - 1) + ". Let's drive on!");
+            startGame();
+        }
+
+    }
 }
 

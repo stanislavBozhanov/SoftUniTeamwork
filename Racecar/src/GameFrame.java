@@ -34,7 +34,7 @@ public class GameFrame extends JPanel implements ActionListener {
         addKeyListener(new KeyAdapt(player));
 
         lives = new Lives(460, 300);
-        asphalt = new Road(0, -850);
+        asphalt = new Road(0, -1050);
         fuelMeter = new FuelMeter(460, 400);
 
         mainTimer = new Timer(10, this);
@@ -56,9 +56,6 @@ public class GameFrame extends JPanel implements ActionListener {
         Line2D lin2 = new Line2D.Float(450, 0, 450, 800*5);
         g2d.draw(lin2);
         /////////////////////////////////////////////////////////////*/
-
-
-        Road asphalt = new Road(460,800);
 
         asphalt.draw(g2d);
         asphalt.setGameSpeed(gameSpeed);

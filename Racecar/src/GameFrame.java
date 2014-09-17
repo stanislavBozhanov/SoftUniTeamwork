@@ -29,7 +29,7 @@ public class GameFrame extends JPanel implements ActionListener {
     public GameFrame() {
         setFocusable(true);
 
-        player = new Player(250, 650);
+        player = new Player(250, 550); // georgi, changed the player startpoint.
         addKeyListener(new KeyAdapt(player));
 
         lives = new Lives(460, 300);

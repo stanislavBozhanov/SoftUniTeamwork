@@ -49,7 +49,7 @@ public class Player{
 
 	public Image getCarImg() {
 
-		ImageIcon ic = new ImageIcon("Racecar/media/car.png");
+		ImageIcon ic = new ImageIcon("media/car.png");
 		return ic.getImage();
 	}
 

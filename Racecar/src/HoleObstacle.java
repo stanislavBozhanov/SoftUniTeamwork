@@ -27,7 +27,7 @@ public class HoleObstacle{
 
 	public Image getHoleObstacleImg() {
 
-		ImageIcon ic = new ImageIcon("Racecar/media/holeobstacle.png");
+		ImageIcon ic = new ImageIcon("media/holeobstacle.png");
 		return ic.getImage();
 	}
 

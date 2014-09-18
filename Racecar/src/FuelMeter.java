@@ -55,7 +55,7 @@ public class FuelMeter {
     }
 
     public Image getFuelContainerImg() {
-        ImageIcon ic = new ImageIcon("Racecar/media/fuelmeter.png");
+        ImageIcon ic = new ImageIcon("media/fuelmeter.png");
         return ic.getImage();
     }
 

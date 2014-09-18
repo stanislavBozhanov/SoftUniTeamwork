@@ -29,7 +29,7 @@ public class Road{
 	}
 	
 	public Image getroadImg(){
-		ImageIcon roadIcon = new ImageIcon("Racecar/media/road.png");
+		ImageIcon roadIcon = new ImageIcon("media/road.png");
 		return roadIcon.getImage();
 	}
 

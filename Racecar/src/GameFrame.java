@@ -1,5 +1,9 @@
 import javax.swing.*;
 import javax.swing.Timer;
+
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,8 +16,14 @@ public class GameFrame extends JPanel implements ActionListener {
     static FuelMeter fuelMeter;  //VELIO: adds the fuelMeter
     Lives lives;
     Road asphalt;
-
-
+    
+    private int score = 0; 
+    private int highScore = 0;
+    private Font scoreFont;
+    private String saveDataPath;
+    private String fileName = "SaveData"; // georgi. added the highscore
+    
+    
     int gameSpeed = 2;  //Velio: will start at 1 and will increase with the levels up
 
     int holeObstaclesCount;
@@ -21,12 +31,26 @@ public class GameFrame extends JPanel implements ActionListener {
 
     static ArrayList<HoleObstacle> holeObstacles = new ArrayList<HoleObstacle>();
     static ArrayList<FuelContainer> fuelContainers = new ArrayList<FuelContainer>();
-    Random rand = new Random();
-
+   
+    Random rand = new Random(); 
+    
+    public void loadFont() throws FontFormatException, IOException{ // georgi, imports the font.
+        String fontFileName = "yourfont.ttf";
+        InputStream is = this.getClass().getResourceAsStream(fontFileName);
+        Font gameFont = Font.createFont(Font.TRUETYPE_FONT, is);   
+      }
 
     public GameFrame() {
         setFocusable(true);
-
+     
+        try {
+        	saveDataPath = GameFrame.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+        } 						// georgi set the path to save the highscore to the bin folder of the game.
+        catch (Exception e){
+        	e.printStackTrace();  
+        }
+        
+        
         player = new Player(250, 550); // georgi, changed the player startpoint.
         addKeyListener(new KeyAdapt(player));
 
@@ -36,11 +60,56 @@ public class GameFrame extends JPanel implements ActionListener {
 
         mainTimer = new Timer(10, this);
         mainTimer.start();
-
+        loadHighScore();	// georgi, loads the highscore.
 
         startGame();
+ 
 
-
+    }
+    
+    private void createSaveData() {  // georgi, creates the file to save the highscores.
+    	try {
+    		File file = new File(saveDataPath, fileName);
+    		FileWriter output = new FileWriter(file);
+    		BufferedWriter writer = new BufferedWriter(output);
+    		writer.write("" + 0);
+    		writer.close();
+    	}
+    	catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    }
+    
+    
+    private void loadHighScore() {		// georgi, loads the highscore.
+    	try {
+    		File f = new File(saveDataPath, fileName); // georgi, checks if the highscore file exists.
+    		if(!f.isFile()){
+    			createSaveData(); // if it doesn't it creates it.
+    		}
+    		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(f)));
+    		highScore = Integer.parseInt(reader.readLine()); // reads the highScore.
+    		reader.close();
+    		
+    	}
+    	catch (Exception e){
+    		e.printStackTrace();
+    	}
+    }
+    
+    private void setHighScore() { // georgi, writes the highscore to the file.
+    	FileWriter output = null;
+    	 
+    	try {
+    		File f = new File(saveDataPath, fileName);
+    		output = new FileWriter(f);
+        	BufferedWriter writer = new BufferedWriter(output);
+        	writer.write("" + highScore);
+        	writer.close();
+    	}
+    	catch (Exception e){
+    		e.printStackTrace();
+    	}
     }
 
     public void paint(Graphics g) {
@@ -62,7 +131,7 @@ public class GameFrame extends JPanel implements ActionListener {
             HoleObstacle tempHoleObstacle = holeObstacles.get(i);
             tempHoleObstacle.draw(g2d);
             tempHoleObstacle.y += gameSpeed;
-
+            
         }
 
         for (int i = 0; i < fuelContainers.size(); i++) {
@@ -74,6 +143,12 @@ public class GameFrame extends JPanel implements ActionListener {
         player.draw(g2d);
         fuelMeter.draw(g2d);
         lives.draw(g2d);
+        
+        g.setColor(Color.LIGHT_GRAY);
+        g.setFont(scoreFont);
+        g.drawString("" + score, 460, 40);
+        g.setColor(Color.red);
+        g.drawString("Best: " + highScore, 460, 80);
     }
 
 
@@ -81,6 +156,10 @@ public class GameFrame extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         asphalt.update();
+        if (score > highScore) { // georgi, checks the if you have highscore.
+       		highScore = score;
+       		
+       	}
 
         for (int i = 0; i < holeObstacles.size(); i++) {
             HoleObstacle tempHoleObstacle = holeObstacles.get(i);
@@ -94,9 +173,11 @@ public class GameFrame extends JPanel implements ActionListener {
 
         player.update();
         lives.update();
-
+        score++;  // georgi, adds points to the highscore.
         checkEnd();
+        setHighScore(); // sets the highscore when you die.
         repaint();
+        
     }
 
     public void addHoleObstacle(HoleObstacle h) {
@@ -157,6 +238,8 @@ public class GameFrame extends JPanel implements ActionListener {
             fuelContainers.clear();
             JOptionPane.showMessageDialog(null, "Nice Driving! You've completed level " + (gameSpeed - 2) + ". Let's drive on!");
             startGame();
+            
+            
         }
 
         if (fuelMeter.getTempFuel() == -10) {

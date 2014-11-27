@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class GameFrame extends JPanel implements ActionListener {
 
@@ -22,7 +23,7 @@ public class GameFrame extends JPanel implements ActionListener {
     private Font scoreFont;
     private String saveDataPath;
     private String fileName = "SaveData"; // georgi. added the highscore
-    
+    private static long initialTime = System.nanoTime();
     
     int gameSpeed = 2;  //Velio: will start at 1 and will increase with the levels up
 
@@ -143,16 +144,28 @@ public class GameFrame extends JPanel implements ActionListener {
         player.draw(g2d);
         fuelMeter.draw(g2d);
         lives.draw(g2d);
+        int[] timeArray = getTimeElapsed();
         
-        g.setColor(Color.LIGHT_GRAY);
-        g.setFont(scoreFont);
-        g.drawString("" + score, 460, 40);
         g.setColor(Color.red);
-        g.drawString("Best: " + highScore, 460, 80);
+        g.setFont(scoreFont);
+        g.drawString("Highscore: " + highScore, 460, 40);
+        g.setColor(Color.black);
+        g.drawString("Time Elapsed: " + timeArray[1] + ":" + timeArray[0], 460, 80);
+        g.drawString("Obstacles Left: " + holeObstacles.size(), 460, 120);
+        g.drawString("Current Score: " + score, 460, 160);
+    }
+    
+    private static int[] getTimeElapsed() {
+    	long timeElapsed = (System.nanoTime() - initialTime) / 1000000;
+    	int timeArray[] = {0,0};
+        
+		timeArray[1] = (int) TimeUnit.MILLISECONDS.toMinutes(timeElapsed);
+        timeElapsed -= TimeUnit.MINUTES.toMillis(timeArray[1]);
+        timeArray[0] = (int) TimeUnit.MILLISECONDS.toSeconds(timeElapsed);
+    	return timeArray;
     }
 
-
-    @Override
+	@Override
     public void actionPerformed(ActionEvent e) {
 
         asphalt.update();

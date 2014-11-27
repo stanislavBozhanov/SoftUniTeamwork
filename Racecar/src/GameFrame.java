@@ -155,6 +155,7 @@ public class GameFrame extends JPanel implements ActionListener {
         g.drawString("Current Score: " + score, 460, 160);
     }
     
+    //Returns an array of integers where the 0th position represents the seconds while the 1st minutes.
     private static int[] getTimeElapsed() {
     	long timeElapsed = (System.nanoTime() - initialTime) / 1000000;
     	int timeArray[] = {0,0};

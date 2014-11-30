@@ -26,6 +26,8 @@ public class GameFrame extends JPanel implements ActionListener {
     private static long initialTime = System.nanoTime();
     
     int gameSpeed = 2;  //Velio: will start at 1 and will increase with the levels up
+    int currentSpeed = gameSpeed;
+    int currentspeedchange = 0;
 
     int holeObstaclesCount;
     int fuelContainersCount;
@@ -42,6 +44,7 @@ public class GameFrame extends JPanel implements ActionListener {
       }
 
     public GameFrame() {
+    	
         setFocusable(true);
      
         try {
@@ -125,20 +128,24 @@ public class GameFrame extends JPanel implements ActionListener {
         /////////////////////////////////////////////////////////////*/
 
         asphalt.draw(g2d);
-        asphalt.setGameSpeed(gameSpeed);
-
+    	currentspeedchange = player.getSpeedChange();
+        currentSpeed = currentSpeed + currentspeedchange;
+        if (currentSpeed <= 0) {
+        	currentSpeed = 0;
+        }
+        asphalt.setGameSpeed(currentSpeed);
 
        for (int i = 0; i < holeObstacles.size(); i++) {
             HoleObstacle tempHoleObstacle = holeObstacles.get(i);
             tempHoleObstacle.draw(g2d);
-            tempHoleObstacle.y += gameSpeed;
+            tempHoleObstacle.y += currentSpeed;
             
         }
 
         for (int i = 0; i < fuelContainers.size(); i++) {
             FuelContainer tempFuelContainer = fuelContainers.get(i);
             tempFuelContainer.draw(g2d);
-            tempFuelContainer.y += gameSpeed;
+            tempFuelContainer.y += currentSpeed;
         }
 
         player.draw(g2d);

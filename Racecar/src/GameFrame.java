@@ -220,7 +220,7 @@ public class GameFrame extends JPanel implements ActionListener {
 
         player.update();
         lives.update();
-        score = score + gameSpeed;  // SKF changed this to have the effect of level on the score
+        score = score + (currentSpeed*gameSpeed); // SKF changed this to have the effect of level on the score
         checkEnd();
         setHighScore(); // sets the highscore when you die.
         repaint();

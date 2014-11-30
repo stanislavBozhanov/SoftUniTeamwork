@@ -34,10 +34,12 @@ public class GameFrame extends JPanel implements ActionListener {
     
     int holeObstaclesCount;
     int fuelContainersCount;
+    int movingObstaclesCount;
 
     static ArrayList<HoleObstacle> holeObstacles = new ArrayList<HoleObstacle>();
     static ArrayList<FuelContainer> fuelContainers = new ArrayList<FuelContainer>();
-   
+    static ArrayList<MovingObstacles> movingObstacles = new ArrayList<MovingObstacles>();
+
     Random rand = new Random(); 
     
     public void loadFont() throws FontFormatException, IOException{ // georgi, imports the font.
@@ -167,6 +169,27 @@ public class GameFrame extends JPanel implements ActionListener {
                 tempFuelContainer.y += currentSpeed;
             }
 
+            for (int i = 0; i < movingObstacles.size(); i++) {
+                MovingObstacles tempMovingObstacles = movingObstacles.get(i);
+            	tempMovingObstacles.draw(g2d);
+            	if (tempMovingObstacles.rightdir == true){
+            		if (tempMovingObstacles.x <= 420){
+                    	tempMovingObstacles.x += 1;
+            		} else {
+                    	tempMovingObstacles.x -= 1;
+                    	tempMovingObstacles.rightdir = false;
+            		}
+            	} else {
+            		if (tempMovingObstacles.x >= 10){
+                    	tempMovingObstacles.x -= 1;
+            		} else {
+                    	tempMovingObstacles.x += 1;
+                    	tempMovingObstacles.rightdir = true;
+            		}
+            	}
+                tempMovingObstacles.y += currentSpeed;
+            }
+
             player.draw(g2d);
             fuelMeter.draw(g2d);
             lives.draw(g2d);
@@ -218,6 +241,11 @@ public class GameFrame extends JPanel implements ActionListener {
             tempFuelContainer.update();
         }
 
+        for (int i = 0; i < movingObstacles.size(); i++) {
+            MovingObstacles tempMovingObstacles = movingObstacles.get(i);
+            tempMovingObstacles.update();
+        }
+
         player.update();
         lives.update();
         score = score + (currentSpeed*gameSpeed); // SKF changed this to have the effect of level on the score
@@ -251,11 +279,23 @@ public class GameFrame extends JPanel implements ActionListener {
         return fuelContainers;
     }
 
+    public void addMovingObstacles(MovingObstacles m) {
+        movingObstacles.add(m);
+    }
+
+    public static void removeMovingObstacles(MovingObstacles m) {
+    	movingObstacles.remove(m);
+    }
+
+    public static ArrayList<MovingObstacles> getMovingObstaclesList() {
+        return movingObstacles;
+    }
 
     //////////////////////////////////////////////////////vlado - added to try to make the movement in the midle and more appart
     public void startGame() {
     	holeObstaclesCount = gameSpeed * 10;
     	fuelContainersCount = gameSpeed * 2;
+    	movingObstaclesCount = gameSpeed;
 
         //Timer for the fuel - each 10 seconds the fuel goes down
         Timer fuelBurner = new Timer(10000, new ActionListener() {
@@ -275,6 +315,11 @@ public class GameFrame extends JPanel implements ActionListener {
     	for (int i = 0; i < fuelContainersCount; i++) {
     		addFuelContainer(new FuelContainer(rand.nextInt(410), -10 -rand.nextInt(800 * gameSpeed)*5));
     	}
+    	
+    	for (int i = 0; i < movingObstaclesCount; i++) {
+    		addMovingObstacles(new MovingObstacles(rand.nextInt(395), -10 -rand.nextInt(800 * gameSpeed)*5,true));
+    	}
+    	
     }
     //////////////////////////////////////////////////////
 

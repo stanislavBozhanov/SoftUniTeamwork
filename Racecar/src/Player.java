@@ -116,6 +116,7 @@ public class Player{
 	public void checkCollisions() {
 		ArrayList<HoleObstacle> holeObstacles = GameFrame.getHoleObstacleList();
 		ArrayList<FuelContainer> fuelContainers = GameFrame.getFuelContainerList();
+		ArrayList<MovingObstacles> movingObstacles = GameFrame.getMovingObstaclesList();
 
 		// Collision with obstacle
 		for (int i = 0; i < holeObstacles.size(); i++) {
@@ -142,6 +143,14 @@ public class Player{
 
 			if (getBounds().intersects(tempFuelContainer.getBounds())) {
 				GameFrame.removeFuelContainer(tempFuelContainer);
+                GameFrame.maxFuel(); //fills the fuel with the maxFuel() method in GameFrame
+			}
+		}
+		for (int i = 0; i < movingObstacles.size(); i++) {
+			MovingObstacles tempMovingObstacles = movingObstacles.get(i);
+
+			if (getBounds().intersects(tempMovingObstacles.getBounds())) {
+				GameFrame.removeMovingObstacles(tempMovingObstacles);
                 GameFrame.maxFuel(); //fills the fuel with the maxFuel() method in GameFrame
 			}
 		}

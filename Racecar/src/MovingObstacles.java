@@ -1,33 +1,34 @@
 import javax.swing.*;
+
 import java.awt.*;
 
-public class HoleObstacle{
+public class MovingObstacles {
 
 	int x, y;
-	//Bebbo: make holes repeat;
+	boolean rightdir;
 	private int startY;
 	
-	public HoleObstacle(int x, int y) {
+	public MovingObstacles(int x, int y, boolean rightdir) {
 		this.x = x;
 		this.y = y;
+		this.rightdir = true;
 		
-		//Bebbo: make holes repeat
 		this.startY = y;
 	}
 
 	public void update() {
-		//Bebbo: make holes repeat
 		checkOffScreen();
 	}
 
 	public void draw(Graphics2D g2d) {
-		g2d.drawImage(getHoleObstacleImg(), x, y, null);
+		g2d.drawImage(getMovingObstacleImg(), x, y, null);
+				
 		//g2d.draw(getBounds());
 	}
 
-	public Image getHoleObstacleImg() {
+	public Image getMovingObstacleImg() {
 
-		ImageIcon ic = new ImageIcon("media/holeobstacle.png");
+		ImageIcon ic = new ImageIcon("media/skull.png");
 		return ic.getImage();
 	}
 
@@ -35,13 +36,13 @@ public class HoleObstacle{
 		return new Rectangle(x, y, 15, 15); //getHoleObstacleImg().SCALE_DEFAULT,getHoleObstacleImg().SCALE_DEFAULT);
     }
 	
-	//Bebbo: make holes repeat;
-    //Velio: when all obstacles are off the screen - level is up, gameSpeed++
+	
     public void checkOffScreen(){
 		
 		if (y >= 950) {
-			GameFrame.removeHoleObstacle(this);
+			GameFrame.removeMovingObstacles(this);
 		}
 	}
-
+	
+	
 }

@@ -255,6 +255,7 @@ public class GameFrame extends JPanel implements ActionListener {
     public void checkEnd() {
         if (holeObstacles.size() == 0) {
             gameSpeed++;
+            currentSpeed = gameSpeed;
             holeObstacles.clear();
             fuelContainers.clear();
             JOptionPane.showMessageDialog(null, "Nice Driving! You've completed level " + (gameSpeed - 2) + ". Let's drive on!");

@@ -203,6 +203,7 @@ public class GameFrame extends JPanel implements ActionListener {
             g.drawString("Obstacles Left: " + holeObstacles.size(), 460, 120);
             g.drawString("Current Score: " + score, 460, 160);
             g.drawString("Current Speed: " + currentSpeed, 460, 200);
+            g.drawString("Current Level: " + (gameSpeed - 1), 460, 240);
             g.setColor(Color.red);
             g.drawString("Press Space to" , 460, 630);
             g.drawString("pause the game", 460, 650);

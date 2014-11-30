@@ -160,6 +160,8 @@ public class GameFrame extends JPanel implements ActionListener {
         g.drawString("Time Elapsed: " + timeArray[1] + ":" + timeArray[0], 460, 80);
         g.drawString("Obstacles Left: " + holeObstacles.size(), 460, 120);
         g.drawString("Current Score: " + score, 460, 160);
+        g.drawString("Current Speed: " + currentSpeed, 460, 200);
+        
     }
     
     //Returns an array of integers where the 0th position represents the seconds while the 1st minutes.

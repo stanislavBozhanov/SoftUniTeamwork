@@ -146,12 +146,19 @@ public class Player{
                 GameFrame.maxFuel(); //fills the fuel with the maxFuel() method in GameFrame
 			}
 		}
+
+		// Collision with moving obstacles
+
 		for (int i = 0; i < movingObstacles.size(); i++) {
 			MovingObstacles tempMovingObstacles = movingObstacles.get(i);
 
 			if (getBounds().intersects(tempMovingObstacles.getBounds())) {
-				GameFrame.removeMovingObstacles(tempMovingObstacles);
-                GameFrame.maxFuel(); //fills the fuel with the maxFuel() method in GameFrame
+                lives--;
+                if (lives == 0) {
+                    JOptionPane.showMessageDialog(null, "GAME OVER");
+                    System.exit(0);
+                }
+                GameFrame.removeMovingObstacles(tempMovingObstacles);
 			}
 		}
 	}

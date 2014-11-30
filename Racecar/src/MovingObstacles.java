@@ -28,7 +28,7 @@ public class MovingObstacles {
 
 	public Image getMovingObstacleImg() {
 
-		ImageIcon ic = new ImageIcon("media/skull.png");
+		ImageIcon ic = new ImageIcon("media/movingobstacle.png");
 		return ic.getImage();
 	}
 

@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+
 public class GameFrame extends JPanel implements ActionListener {
 
     Timer mainTimer;
@@ -29,6 +30,8 @@ public class GameFrame extends JPanel implements ActionListener {
     int currentSpeed = gameSpeed;
     int currentspeedchange = 0;
 
+    boolean gamepause = false;
+    
     int holeObstaclesCount;
     int fuelContainersCount;
 
@@ -127,42 +130,63 @@ public class GameFrame extends JPanel implements ActionListener {
         g2d.draw(lin2);
         /////////////////////////////////////////////////////////////*/
 
-        asphalt.draw(g2d);
-    	currentspeedchange = player.getSpeedChange();
-        currentSpeed = currentSpeed + currentspeedchange;
-        if (currentSpeed <= 0) {
-        	currentSpeed = 0;
-        }
-        asphalt.setGameSpeed(currentSpeed);
+        gamepause = player.getGamePause();
+        if (this.gamepause == true) {
+        	g.setColor(Color.blue);
+        	g.setFont(new Font("TimesRoman", Font.BOLD, 40));
+        	g.drawString("Game is paused!", 150, 300);
+        	g.setFont(new Font("TimesRoman", Font.BOLD, 35));
+        	g.drawString("Press Space to continue the game.", 50, 400);
 
-       for (int i = 0; i < holeObstacles.size(); i++) {
-            HoleObstacle tempHoleObstacle = holeObstacles.get(i);
-            tempHoleObstacle.draw(g2d);
-            tempHoleObstacle.y += currentSpeed;
+        	try {
+        		Thread.sleep(1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             
-        }
+        } else {
+            asphalt.draw(g2d);
+        	currentspeedchange = player.getSpeedChange();
+            currentSpeed = currentSpeed + currentspeedchange;
+            if (currentSpeed <= 0) {
+            	currentSpeed = 0;
+            }
+            asphalt.setGameSpeed(currentSpeed);
 
-        for (int i = 0; i < fuelContainers.size(); i++) {
-            FuelContainer tempFuelContainer = fuelContainers.get(i);
-            tempFuelContainer.draw(g2d);
-            tempFuelContainer.y += currentSpeed;
-        }
+           for (int i = 0; i < holeObstacles.size(); i++) {
+                HoleObstacle tempHoleObstacle = holeObstacles.get(i);
+                tempHoleObstacle.draw(g2d);
+                tempHoleObstacle.y += currentSpeed;
+                
+            }
 
-        player.draw(g2d);
-        fuelMeter.draw(g2d);
-        lives.draw(g2d);
-        int[] timeArray = getTimeElapsed();
-        
-        g.setColor(Color.red);
-        g.setFont(scoreFont);
-        g.drawString("Highscore: " + highScore, 460, 40);
-        g.setColor(Color.black);
-        g.drawString("Time Elapsed: " + timeArray[1] + ":" + timeArray[0], 460, 80);
-        g.drawString("Obstacles Left: " + holeObstacles.size(), 460, 120);
-        g.drawString("Current Score: " + score, 460, 160);
-        g.drawString("Current Speed: " + currentSpeed, 460, 200);
-        
-    }
+            for (int i = 0; i < fuelContainers.size(); i++) {
+                FuelContainer tempFuelContainer = fuelContainers.get(i);
+                tempFuelContainer.draw(g2d);
+                tempFuelContainer.y += currentSpeed;
+            }
+
+            player.draw(g2d);
+            fuelMeter.draw(g2d);
+            lives.draw(g2d);
+            int[] timeArray = getTimeElapsed();
+            
+            g.setColor(Color.red);
+            g.setFont(scoreFont);
+            g.drawString("Highscore: " + highScore, 460, 40);
+            g.setColor(Color.black);
+            g.drawString("Time Elapsed: " + timeArray[1] + ":" + timeArray[0], 460, 80);
+            g.drawString("Obstacles Left: " + holeObstacles.size(), 460, 120);
+            g.drawString("Current Score: " + score, 460, 160);
+            g.drawString("Current Speed: " + currentSpeed, 460, 200);
+            g.setColor(Color.red);
+            g.drawString("Press Space to" , 460, 630);
+            g.drawString("pause the game", 460, 650);
+        }
+        	
+        }
+        	
     
     //Returns an array of integers where the 0th position represents the seconds while the 1st minutes.
     private static int[] getTimeElapsed() {

@@ -11,6 +11,7 @@ public class Player{
     int x, y;
     
     int currentspeedchange = 0;
+    boolean gamepause = false;
     
     
     public Player(int x, int y) {
@@ -82,6 +83,13 @@ public class Player{
 			currentspeedchange = 1;
 		} else if (key == KeyEvent.VK_SPACE) {
 			System.out.println("Space key pressed.");
+			if (this.gamepause == false){
+				this.gamepause = true;				
+			} else {
+				this.gamepause = false;
+			}
+			System.out.println("pause: " + this.gamepause);
+
 		}
 	}
 
@@ -147,5 +155,9 @@ public class Player{
 	public int getSpeedChange() {
 		return currentspeedchange;
 	}
-	
+
+	public boolean getGamePause() {
+		return this.gamepause;
+	}
+
 }

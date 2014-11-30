@@ -5,11 +5,13 @@ import java.util.ArrayList;
 
 public class Player{
 
+//	GameFrame gameframe;
 	int velX = 0;
 	int speed = 2;
     int lives = 5;
     int x, y;
-
+    
+    
     public Player(int x, int y) {
 		this.x = x;
 		this.y = y;
@@ -68,6 +70,13 @@ public class Player{
                 x = 390;
                 velX = 0;
             }
+		} else if (key == KeyEvent.VK_DOWN) {
+			System.out.println("Down key pressed.");
+			
+		} else if (key == KeyEvent.VK_UP) {
+			System.out.println("Up key pressed.");
+		} else if (key == KeyEvent.VK_SPACE) {
+			System.out.println("Space key pressed.");
 		}
 	}
 
@@ -77,6 +86,12 @@ public class Player{
 		if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_H) {
 			velX = 0;
 		} else if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_L) {
+			velX = 0;
+		} else if (key == KeyEvent.VK_DOWN) {
+			velX = 0;
+		} else if (key == KeyEvent.VK_UP) {
+			velX = 0;
+		} else if (key == KeyEvent.VK_SPACE) {
 			velX = 0;
 		}
 	}
@@ -117,7 +132,7 @@ public class Player{
 
 	public Rectangle getBounds() {
 		return new Rectangle(x, y, 40, 110); //getCarImg().getWidth(null), getCarImg().getHeight(null));
-        //VELIO: 40, 110 малко намаля размера на колата, така че ако се удари дупка леко отстрани на колата, няма веднага да умреш.
+        //VELIO: 40, 110 Ð¼Ð°Ð»ÐºÐ¾ Ð½Ð°Ð¼Ð°Ð»Ñ� Ñ€Ð°Ð·Ð¼ÐµÑ€Ð° Ð½Ð° ÐºÐ¾Ð»Ð°Ñ‚Ð°, Ñ‚Ð°ÐºÐ° Ñ‡Ðµ Ð°ÐºÐ¾ Ñ�Ðµ ÑƒÐ´Ð°Ñ€Ð¸ Ð´ÑƒÐ¿ÐºÐ° Ð»ÐµÐºÐ¾ Ð¾Ñ‚Ñ�Ñ‚Ñ€Ð°Ð½Ð¸ Ð½Ð° ÐºÐ¾Ð»Ð°Ñ‚Ð°, Ð½Ñ�Ð¼Ð° Ð²ÐµÐ´Ð½Ð°Ð³Ð° Ð´Ð° ÑƒÐ¼Ñ€ÐµÑˆ.
     }
 
 }

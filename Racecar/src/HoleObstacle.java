@@ -33,7 +33,6 @@ public class HoleObstacle{
 
 	public Rectangle getBounds() {
 		return new Rectangle(x, y, 15, 15); //getHoleObstacleImg().SCALE_DEFAULT,getHoleObstacleImg().SCALE_DEFAULT);
-        //VELIO: 15, 15 намаля малко размера на дупката, който отчита сблъсък. Иначе при по-трудни нива става прекалено трудно да се избегне удар.
     }
 	
 	//Bebbo: make holes repeat;

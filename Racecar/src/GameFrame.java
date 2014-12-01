@@ -8,6 +8,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+
 
 public class GameFrame extends JPanel implements ActionListener {
 
@@ -22,16 +24,22 @@ public class GameFrame extends JPanel implements ActionListener {
     private Font scoreFont;
     private String saveDataPath;
     private String fileName = "SaveData"; // georgi. added the highscore
-    
+    private static long initialTime = System.nanoTime();
     
     int gameSpeed = 2;  //Velio: will start at 1 and will increase with the levels up
+    int currentSpeed = gameSpeed;
+    int currentspeedchange = 0;
 
+    boolean gamepause = false;
+    
     int holeObstaclesCount;
     int fuelContainersCount;
+    int movingObstaclesCount;
 
     static ArrayList<HoleObstacle> holeObstacles = new ArrayList<HoleObstacle>();
     static ArrayList<FuelContainer> fuelContainers = new ArrayList<FuelContainer>();
-   
+    static ArrayList<MovingObstacles> movingObstacles = new ArrayList<MovingObstacles>();
+
     Random rand = new Random(); 
     
     public void loadFont() throws FontFormatException, IOException{ // georgi, imports the font.
@@ -41,6 +49,7 @@ public class GameFrame extends JPanel implements ActionListener {
       }
 
     public GameFrame() {
+    	
         setFocusable(true);
      
         try {
@@ -123,36 +132,98 @@ public class GameFrame extends JPanel implements ActionListener {
         g2d.draw(lin2);
         /////////////////////////////////////////////////////////////*/
 
-        asphalt.draw(g2d);
-        asphalt.setGameSpeed(gameSpeed);
+        gamepause = player.getGamePause();
+        if (this.gamepause == true) {
+        	g.setColor(Color.blue);
+        	g.setFont(new Font("TimesRoman", Font.BOLD, 40));
+        	g.drawString("Game is paused!", 150, 300);
+        	g.setFont(new Font("TimesRoman", Font.BOLD, 35));
+        	g.drawString("Press Space to continue the game.", 50, 400);
 
-
-       for (int i = 0; i < holeObstacles.size(); i++) {
-            HoleObstacle tempHoleObstacle = holeObstacles.get(i);
-            tempHoleObstacle.draw(g2d);
-            tempHoleObstacle.y += gameSpeed;
+        	try {
+        		Thread.sleep(1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             
-        }
+        } else {
+            asphalt.draw(g2d);
+        	currentspeedchange = player.getSpeedChange();
+            currentSpeed = currentSpeed + currentspeedchange;
+            if (currentSpeed <= 0) {
+            	currentSpeed = 0;
+            }
+            asphalt.setGameSpeed(currentSpeed);
 
-        for (int i = 0; i < fuelContainers.size(); i++) {
-            FuelContainer tempFuelContainer = fuelContainers.get(i);
-            tempFuelContainer.draw(g2d);
-            tempFuelContainer.y += gameSpeed;
-        }
+           for (int i = 0; i < holeObstacles.size(); i++) {
+                HoleObstacle tempHoleObstacle = holeObstacles.get(i);
+                tempHoleObstacle.draw(g2d);
+                tempHoleObstacle.y += currentSpeed;
+                
+            }
 
-        player.draw(g2d);
-        fuelMeter.draw(g2d);
-        lives.draw(g2d);
+            for (int i = 0; i < fuelContainers.size(); i++) {
+                FuelContainer tempFuelContainer = fuelContainers.get(i);
+                tempFuelContainer.draw(g2d);
+                tempFuelContainer.y += currentSpeed;
+            }
+
+            for (int i = 0; i < movingObstacles.size(); i++) {
+                MovingObstacles tempMovingObstacles = movingObstacles.get(i);
+            	tempMovingObstacles.draw(g2d);
+            	if (tempMovingObstacles.rightdir == true){
+            		if (tempMovingObstacles.x <= 380){
+                    	tempMovingObstacles.x += gameSpeed;
+            		} else {
+                    	tempMovingObstacles.x -= gameSpeed;
+                    	tempMovingObstacles.rightdir = false;
+            		}
+            	} else {
+            		if (tempMovingObstacles.x >= 20){
+                    	tempMovingObstacles.x -= gameSpeed;
+            		} else {
+                    	tempMovingObstacles.x += gameSpeed;
+                    	tempMovingObstacles.rightdir = true;
+            		}
+            	}
+                tempMovingObstacles.y += currentSpeed;
+            }
+
+            player.draw(g2d);
+            fuelMeter.draw(g2d);
+            lives.draw(g2d);
+            int[] timeArray = getTimeElapsed();
+            
+            g.setColor(Color.red);
+            g.setFont(scoreFont);
+            g.drawString("Highscore: " + highScore, 460, 40);
+            g.setColor(Color.black);
+            g.drawString("Time Elapsed: " + timeArray[1] + ":" + timeArray[0], 460, 80);
+            g.drawString("Obstacles Left: " + holeObstacles.size(), 460, 120);
+            g.drawString("Current Score: " + score, 460, 160);
+            g.drawString("Current Speed: " + currentSpeed, 460, 200);
+            g.drawString("Current Level: " + (gameSpeed - 1), 460, 240);
+            g.setColor(Color.red);
+            g.drawString("Press Space to" , 460, 630);
+            g.drawString("pause the game", 460, 650);
+        }
+        	
+        }
+        	
+    
+    //Returns an array of integers where the 0th position represents the seconds while the 1st minutes.
+    private static int[] getTimeElapsed() {
+    	long timeElapsed = (System.nanoTime() - initialTime) / 1000000;
+    	int timeArray[] = {0,0};
         
-        g.setColor(Color.LIGHT_GRAY);
-        g.setFont(scoreFont);
-        g.drawString("" + score, 460, 40);
-        g.setColor(Color.red);
-        g.drawString("Best: " + highScore, 460, 80);
+		timeArray[1] = (int) TimeUnit.MILLISECONDS.toMinutes(timeElapsed);
+        timeElapsed -= TimeUnit.MINUTES.toMillis(timeArray[1]);
+        timeArray[0] = (int) TimeUnit.MILLISECONDS.toSeconds(timeElapsed);
+    	return timeArray;
     }
 
-
-    @Override
+	@Override
     public void actionPerformed(ActionEvent e) {
 
         asphalt.update();
@@ -171,9 +242,14 @@ public class GameFrame extends JPanel implements ActionListener {
             tempFuelContainer.update();
         }
 
+        for (int i = 0; i < movingObstacles.size(); i++) {
+            MovingObstacles tempMovingObstacles = movingObstacles.get(i);
+            tempMovingObstacles.update();
+        }
+
         player.update();
         lives.update();
-        score++;  // georgi, adds points to the highscore.
+        score = score + (currentSpeed*gameSpeed); // SKF changed this to have the effect of level on the score
         checkEnd();
         setHighScore(); // sets the highscore when you die.
         repaint();
@@ -204,11 +280,23 @@ public class GameFrame extends JPanel implements ActionListener {
         return fuelContainers;
     }
 
+    public void addMovingObstacles(MovingObstacles m) {
+        movingObstacles.add(m);
+    }
+
+    public static void removeMovingObstacles(MovingObstacles m) {
+    	movingObstacles.remove(m);
+    }
+
+    public static ArrayList<MovingObstacles> getMovingObstaclesList() {
+        return movingObstacles;
+    }
 
     //////////////////////////////////////////////////////vlado - added to try to make the movement in the midle and more appart
     public void startGame() {
     	holeObstaclesCount = gameSpeed * 10;
     	fuelContainersCount = gameSpeed * 2;
+    	movingObstaclesCount = gameSpeed;
 
         //Timer for the fuel - each 10 seconds the fuel goes down
         Timer fuelBurner = new Timer(10000, new ActionListener() {
@@ -228,12 +316,18 @@ public class GameFrame extends JPanel implements ActionListener {
     	for (int i = 0; i < fuelContainersCount; i++) {
     		addFuelContainer(new FuelContainer(rand.nextInt(410), -10 -rand.nextInt(800 * gameSpeed)*5));
     	}
+    	
+    	for (int i = 0; i < movingObstaclesCount; i++) {
+    		addMovingObstacles(new MovingObstacles(rand.nextInt(395), -10 -rand.nextInt(800 * gameSpeed)*5,true));
+    	}
+    	
     }
     //////////////////////////////////////////////////////
 
     public void checkEnd() {
         if (holeObstacles.size() == 0) {
             gameSpeed++;
+            currentSpeed = gameSpeed;
             holeObstacles.clear();
             fuelContainers.clear();
             JOptionPane.showMessageDialog(null, "Nice Driving! You've completed level " + (gameSpeed - 2) + ". Let's drive on!");

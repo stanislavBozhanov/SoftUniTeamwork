@@ -173,14 +173,14 @@ public class GameFrame extends JPanel implements ActionListener {
                 MovingObstacles tempMovingObstacles = movingObstacles.get(i);
             	tempMovingObstacles.draw(g2d);
             	if (tempMovingObstacles.rightdir == true){
-            		if (tempMovingObstacles.x <= 420){
+            		if (tempMovingObstacles.x <= 380){
                     	tempMovingObstacles.x += gameSpeed;
             		} else {
                     	tempMovingObstacles.x -= gameSpeed;
                     	tempMovingObstacles.rightdir = false;
             		}
             	} else {
-            		if (tempMovingObstacles.x >= 10){
+            		if (tempMovingObstacles.x >= 20){
                     	tempMovingObstacles.x -= gameSpeed;
             		} else {
                     	tempMovingObstacles.x += gameSpeed;
